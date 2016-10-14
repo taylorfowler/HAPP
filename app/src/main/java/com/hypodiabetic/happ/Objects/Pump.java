@@ -61,6 +61,11 @@ public class Pump {
                 min_low_basal_duration  =   30;
                 min_high_basal_duration =   30;
                 break;
+            case "tslim":
+                basal_mode              =   PERCENT;
+                min_low_basal_duration  =   0;
+                min_high_basal_duration =   0;
+                break;
         }
 
         temp_basal_active   =   tempBasal.isactive(new Date());
@@ -78,6 +83,13 @@ public class Pump {
                 //limited to double current basal
                 if (rate > (2 * default_basal_rate)) {
                     return 2 * default_basal_rate;
+                } else {
+                    return rate;
+                }
+            case "tslim":
+                //limited to 250% current basal
+                if (rate > (2.5 * default_basal_rate)) {
+                    return 2.5 * default_basal_rate;
                 } else {
                     return rate;
                 }
